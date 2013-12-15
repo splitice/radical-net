@@ -1,0 +1,16 @@
+{
+	"keywords" : [
+		"radical-php"
+	],
+	"autoload" : {
+		"psr-0" : {
+			"Radical" : "src"
+		}
+	},
+	"name" : "splitice/radical-net",
+	"type" : "library",
+	"description" : "radical-net",
+	"require" : {
+		"php" : ">=5.4"
+	}
+}
