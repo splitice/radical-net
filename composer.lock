@@ -1,0 +1,138 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "37bd1bd842d28f95a9ef3f2610321ccf",
+    "packages": [
+        {
+            "name": "splitice/radical-basic",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/splitice/radical-basic.git",
+                "reference": "81b8bd282421516414674d541faaaa41bd39da18"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/splitice/radical-basic/zipball/81b8bd282421516414674d541faaaa41bd39da18",
+                "reference": "81b8bd282421516414674d541faaaa41bd39da18",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "splitice/radical-common": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Radical": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "description": "Basic radical-php functionality",
+            "keywords": [
+                "radical-php"
+            ],
+            "time": "2013-12-12 10:11:52"
+        },
+        {
+            "name": "splitice/radical-common",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/splitice/radical-common.git",
+                "reference": "670d4ccad86579a7c5cad3a5b5eb64287093c456"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/splitice/radical-common/zipball/670d4ccad86579a7c5cad3a5b5eb64287093c456",
+                "reference": "670d4ccad86579a7c5cad3a5b5eb64287093c456",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4",
+                "symfony/filesystem": "2.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Radical": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "radical-common",
+            "keywords": [
+                "radical-php"
+            ],
+            "time": "2013-12-15 03:54:06"
+        },
+        {
+            "name": "symfony/filesystem",
+            "version": "v2.4.0",
+            "target-dir": "Symfony/Component/Filesystem",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Filesystem.git",
+                "reference": "79acd777762e81d0f3414ca25a602deeeb48240d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/79acd777762e81d0f3414ca25a602deeeb48240d",
+                "reference": "79acd777762e81d0f3414ca25a602deeeb48240d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Filesystem Component",
+            "homepage": "http://symfony.com",
+            "time": "2013-11-16 15:13:54"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "splitice/radical-common": 20,
+        "splitice/radical-basic": 20
+    },
+    "platform": {
+        "php": ">=5.4"
+    },
+    "platform-dev": [
+
+    ]
+}

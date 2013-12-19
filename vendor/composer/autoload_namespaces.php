@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Radical' => array($baseDir . '/src'),
+    'Symfony\\Component\\Filesystem\\' => array($vendorDir . '/symfony/filesystem'),
+    'Radical' => array($baseDir . '/src', $vendorDir . '/splitice/radical-common/src', $vendorDir . '/splitice/radical-basic/src'),
 );
