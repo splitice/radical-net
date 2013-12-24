@@ -45,12 +45,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/splitice/radical-common.git",
-                "reference": "670d4ccad86579a7c5cad3a5b5eb64287093c456"
+                "reference": "35c18185ad3dc981607a3397ea534ed592e588d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/splitice/radical-common/zipball/670d4ccad86579a7c5cad3a5b5eb64287093c456",
-                "reference": "670d4ccad86579a7c5cad3a5b5eb64287093c456",
+                "url": "https://api.github.com/repos/splitice/radical-common/zipball/35c18185ad3dc981607a3397ea534ed592e588d0",
+                "reference": "35c18185ad3dc981607a3397ea534ed592e588d0",
                 "shasum": ""
             },
             "require": {
@@ -68,7 +68,7 @@
             "keywords": [
                 "radical-php"
             ],
-            "time": "2013-12-15 03:54:06"
+            "time": "2013-12-19 08:20:14"
         },
         {
             "name": "symfony/filesystem",
