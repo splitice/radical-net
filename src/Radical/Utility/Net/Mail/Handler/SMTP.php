@@ -217,7 +217,8 @@ class SMTP implements IMailHandler {
 	/* private functions used internally */
 	private function getServerResponse() {
 		$data = "";
-		while ( $str = fgets ( $this->conn, 4096 ) ) {
+		while ( !feof($this->conn) ) {
+			$str = fgets ( $this->conn, 4096 );
 			$data .= $str;
 			if (substr ( $str, 3, 1 ) == " ") {
 				break;

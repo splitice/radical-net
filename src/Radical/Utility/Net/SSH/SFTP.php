@@ -36,9 +36,6 @@ class SFTP {
 	function getConnection(){
 		return $this->ssh;
 	}
-	function newFile($path){
-		return new \Raical\File($this->getPath($path));
-	}
 	function getPath($path){
 		return self::SCHEME.$this->sftp.$path;
 	}

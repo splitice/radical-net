@@ -35,7 +35,7 @@ class Message {
 
 	function __construct(Handler\IMailHandler $handler = null){
 		if($handler === null){
-			$handler = new Handler\Internal();
+			$handler = HandlerRouter::get_handler();
 		}
 		$this->handler = $handler;
 	}

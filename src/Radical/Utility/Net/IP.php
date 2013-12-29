@@ -72,6 +72,6 @@ class IP {
 	}
 	
 	function toEscaped(){
-		return \DB::E($this->ip);
+		return \Radical\DB::E($this->ip);
 	}
 }
