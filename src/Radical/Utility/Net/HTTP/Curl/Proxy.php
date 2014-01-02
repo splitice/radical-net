@@ -1,6 +1,7 @@
 <?php
 namespace Radical\Utility\Net\HTTP\Curl;
 use Radical\Basic\Structs\UserPass;
+use Radical\Utility\Net\HTTP\Curl;
 /**
  * Proxy class used to define proxy for curl connections
  *
@@ -16,7 +17,7 @@ class Proxy {
 
         function __construct($address=null){
             if($address)
-                $this->address = $adress;
+                $this->address = $address;
             $this->port = 80;
             $this->type = CURLPROXY_HTTP;
             $this->userpass = new UserPass('','');
@@ -25,7 +26,7 @@ class Proxy {
         function setAddress($address=null){
             /* TODO: use Radical\URL Class */
             if($address)
-                $this->address = $adress;
+                $this->address = $address;
         }
 
         function setPort($port){
@@ -57,7 +58,7 @@ class Proxy {
             }
         }
 
-        function apply(Curl &$curl){
+        function apply(Curl $curl){
             $curl->curl[CURLOPT_PROXY] = $this->address;
             $curl->curl[CURLOPT_PROXYPORT] = $this->port;
             $curl->curl[CURLOPT_PROXYUSERPWD] = (string)$this->userpass;

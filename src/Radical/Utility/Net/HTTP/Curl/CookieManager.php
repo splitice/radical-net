@@ -1,7 +1,7 @@
 <?php
 namespace Radical\Utility\Net\HTTP\Curl;
 
-use Radical\Utility\Cache\Object\WeakRef;
+use Radical\Cache\Object\WeakRef;
 
 class CookieManager {
 	private $file;
