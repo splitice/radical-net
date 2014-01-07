@@ -27,7 +27,7 @@ class SFTP {
 	}
 	
 	function getFile($path,$mustExist = false){
-		$file = $this->newFile($path);
+		$file = new \Radical\File($this->getPath($path));
 		if($mustExist && !$file->Exists()){
 			throw new \Exceptions\FileNotExists($path);
 		}

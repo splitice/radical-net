@@ -5,7 +5,7 @@ class Fetch {
 	public $curl;
 	private $headers = array();
 	
-	function __construct($url=false,$class='\\Utility\\Net\\HTTP\\Curl'){
+	function __construct($url=false,$class='\\Radical\\Utility\\Net\\HTTP\\Curl'){
 		$this->curl = new $class($url);
 		
 		global $_CONFIG;
@@ -44,7 +44,7 @@ class Fetch {
 	function followLocation($bool, $max = null){
                 $this->curl[CURLOPT_FOLLOWLOCATION] = $bool;
                 if($max)
-                    $this->curl[CURLOPT_MAXREDIRS] = $amx;
+                    $this->curl[CURLOPT_MAXREDIRS] = $max;
                 return $this;
 	}
 	function setTimeout($time){

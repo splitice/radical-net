@@ -1,8 +1,7 @@
 <?php
 namespace Radical\Utility\Net\HTTP\Curl;
 
-use Radical\Model\Database\IToSQL;
-
+use Radical\Database\IToSQL;
 class Info implements IToSQL {
 	public $url;
 	public $content_type;
