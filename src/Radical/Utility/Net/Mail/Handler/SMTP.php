@@ -43,17 +43,15 @@ class SMTP implements IMailHandler {
 		if ($this->secure == 'ssl') {
 			$this->server = 'ssl://' . $this->server;
 		}
-		
-		if (! $this->connect ())
-			return;
-		if (! $this->auth ())
-			return;
-		$this->isLogin = true;
 	}
 	
 	/* Connect to the server */
 	protected function connect() {
 		$this->conn = fsockopen ( $this->server, $this->port, $errno, $errstr, $this->timeout );
+		if(!$this->conn){
+			echo $errstr,"\r\n";
+			return false;
+		}
 		if (substr ( $this->getServerResponse (), 0, 3 ) != '220') {
 			return false;
 		}
@@ -94,6 +92,14 @@ class SMTP implements IMailHandler {
 	
 	/* send the email message */
 	function send(Message $m, $message) {
+		if(!$this->isLogin){
+			if (! $this->connect ())
+				return;
+			if (! $this->auth ())
+				return;
+			$this->isLogin = true;
+		}
+		
 		$from = $m->getFrom ();
 		$to = $m->getTo ();
 		$subject = $m->getSubject ();
@@ -141,6 +147,9 @@ class SMTP implements IMailHandler {
 		fputs ( $this->conn, 'DATA' . $this->newline );
 		$this->getServerResponse ();
 		fputs ( $this->conn, $email ); /* transmit the entire email here */
+		
+		$this->altBody = '';
+		
 		if (substr ( $this->getServerResponse (), 0, 3 ) != '250') {
 			return false;
 		}
@@ -209,9 +218,12 @@ class SMTP implements IMailHandler {
 	
 	/* Quit and disconnect */
 	function __destruct() {
-		fputs ( $this->conn, 'QUIT' . $this->newline );
-		$this->getServerResponse ();
-		fclose ( $this->conn );
+		if($this->conn && $this->isLogin){
+			fputs ( $this->conn, 'QUIT' . $this->newline );
+			$this->getServerResponse ();
+			fclose ( $this->conn );
+			$this->conn = null;
+		}
 	}
 	
 	/* private functions used internally */
@@ -294,7 +306,6 @@ class SMTP implements IMailHandler {
 		
 		$parts .= "--" . $boundary . "--";
 		
-		$message = ob_get_clean (); // Turn off output buffering
 		return $parts;
 	}
 }
