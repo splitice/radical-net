@@ -1,9 +1,7 @@
 <?php
 namespace Radical\Utility\Net\Mail;
 
-use Radical\Web\Page\Handler\SubRequest;
-use Radical\Web\Page\Handler\PageBase;
-
+use Radical\Core\IRenderToString;
 use Radical\Utility\Net\Mail\Handler;
 
 class Message {
@@ -111,11 +109,11 @@ class Message {
 	}
 	
 	static function body($body){
-		if($body instanceof PageBase){
-			$sr = new SubRequest($body);
-			$body = $sr->Execute('GET');
+		if($body instanceof IRenderToString){
+			return $body->renderString();
+		}else{
+			return $body;
 		}
-		return $body;
 	}
 
 	function send($body){

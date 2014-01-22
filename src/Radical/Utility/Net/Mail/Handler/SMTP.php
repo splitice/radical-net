@@ -10,7 +10,7 @@ class SMTP implements IMailHandler {
 	public $username;
 	public $password;
 	public $secure; /* can be tls, ssl, or none */
-	public $charset = "\"iso-8859-1\""; /* included double quotes on purpose */
+	public $charset = "\"utf-8\""; /* included double quotes on purpose */
 	public $contentType = "multipart/mixed"; /*
 	                                          * can be set to: text/plain,
 	                                          * text/html, multipart/mixed
@@ -219,9 +219,9 @@ class SMTP implements IMailHandler {
 	/* Quit and disconnect */
 	function __destruct() {
 		if($this->conn && $this->isLogin){
-			fputs ( $this->conn, 'QUIT' . $this->newline );
-			$this->getServerResponse ();
-			fclose ( $this->conn );
+			@stream_set_blocking($this->conn, false);
+			@fputs ( $this->conn, 'QUIT' . $this->newline );
+			@fclose ( $this->conn );
 			$this->conn = null;
 		}
 	}
