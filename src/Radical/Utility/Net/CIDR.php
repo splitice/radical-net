@@ -1,6 +1,7 @@
 <?php
 namespace Radical\Utility\Net;
 
+use X4B\Utility\CIDRRange;
 class CIDR {
 	protected $cidr;
 	
@@ -8,11 +9,17 @@ class CIDR {
 		$this->cidr = $cidr;
 	}
 	
-	function contains($ip){
+	function mask(){
 		list ($net, $mask) = split ("/", $this->cidr);
 		
 		$ip_net = ip2long ($net);
 		$ip_mask = ~((1 << (32 - $mask)) - 1);
+		
+		return $ip_mask;
+	}
+	
+	function contains($ip){
+		$ip_mask = $this->mask();
 		
 		$ip_ip = ip2long ($ip);
 		
@@ -21,8 +28,28 @@ class CIDR {
 		return ($ip_ip_net == $ip_net);
 	}
 	
+	function network(){
+		list ($net, $mask) = split ("/", $this->cidr);
+		
+		$ip_net = ip2long ($net);
+		$ip_mask = ~((1 << (32 - $mask)) - 1);
+		
+		$ip_ip_net = $ip_net & $ip_mask;
+		
+		return long2ip($ip_ip_net);
+	}
+	
 	function validate(){
 		return preg_match('`^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(\d|[1-2]\d|3[0-2]))$`m', $this->cidr);
+	}
+	
+	function range(){
+		list($start,$end) = CIDRRange::cidrToRange($this->cidr);
+		$ret = array();
+		for($i = ip2long($start), $f = ip2long($end); $i <= $f; $i++){
+			$ret[] = long2ip($i);
+		}
+		return $ret;
 	}
 	
 	function __toString(){
