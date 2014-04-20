@@ -18,14 +18,14 @@ class Message {
 	private $headers;
 	
 	/**
-	 * @return the $headers
+	 * @return array $headers
 	 */
 	public function getHeaders() {
 		return $this->headers;
 	}
 
 	/**
-	 * @param field_type $headers
+	 * @param array $headers
 	 */
 	public function setHeaders($headers) {
 		$this->headers = $headers;
@@ -39,49 +39,49 @@ class Message {
 	}
 	
 	/**
-	 * @return the $reply_to
+	 * @return string $reply_to
 	 */
 	public function getReplyTo() {
 		return $this->reply_to;
 	}
 
 	/**
-	 * @param field_type $reply_to
+	 * @param string $reply_to
 	 */
 	public function setReplyTo($reply_to) {
 		$this->reply_to = $reply_to;
 	}
 
 	/**
-	 * @return the $to
+	 * @return string $to
 	 */
 	public function getTo() {
 		return $this->to;
 	}
 
 	/**
-	 * @return the $from
+	 * @return string $from
 	 */
 	public function getFrom() {
 		return $this->from;
 	}
 
 	/**
-	 * @return the $subject
+	 * @return string $subject
 	 */
 	public function getSubject() {
 		return $this->subject;
 	}
 
 	/**
-	 * @param field_type $to
+	 * @param string $to
 	 */
 	public function setTo($to) {
 		$this->to = $to;
 	}
 
 	/**
-	 * @param field_type $from
+	 * @param string $from
 	 */
 	public function setFrom($from) {
 		$this->from = $from;
@@ -95,14 +95,14 @@ class Message {
 	}
 
 	/**
-	 * @return the $html
+	 * @return string $html
 	 */
 	public function getHtml() {
 		return $this->html;
 	}
 
 	/**
-	 * @param field_type $subject
+	 * @param string $subject
 	 */
 	public function setSubject($subject) {
 		$this->subject = $subject;

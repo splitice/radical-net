@@ -1,8 +1,8 @@
 <?php
 namespace Radical\Utility\HTTP\Cache;
 
-use Radical\Model\Database\Model\DynamicTableReference;
-use Radical\Model\Database\Model\DynamicTableInstance;
+use Radical\Radical\Database\Model\DynamicTableReference;
+use Radical\Radical\Database\Model\DynamicTableInstance;
 
 class Mysql extends DynamicTableInstance {
 	function __construct(){
