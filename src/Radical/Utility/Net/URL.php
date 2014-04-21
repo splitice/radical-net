@@ -126,7 +126,7 @@ class URL {
 	}
 
 	/**
-	 * @return \Utility\Net\URL\Path $path
+	 * @return \Radical\Utility\Net\URL\Path $path
 	 */
 	public function getPath() {
 		return $this->path;

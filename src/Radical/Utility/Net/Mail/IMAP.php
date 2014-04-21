@@ -14,14 +14,24 @@ class IMAP {
 	function con(){
 		return $this->con;
 	}
-	
-	function get_mailbox($mailbox){
+
+    /**
+     * @param $mailbox
+     * @return IMAP\Mailbox
+     */
+    function get_mailbox($mailbox){
 		return new IMAP\Mailbox($this, $mailbox);
 	}
-	function get_mailboxes($ref, $pattern = '*'){
+
+    /**
+     * @param $ref
+     * @param string $pattern
+     * @return IMAP\Mailbox[]
+     */
+    function get_mailboxes($ref, $pattern = '*'){
 		$ret = array();
 		foreach(imap_list($this->con, $ref, $pattern) as $mb){
-			$ret[] = new IMAP\Mailbox($this, $mb);
+			$ret[] = $this->get_mailbox($mb);
 		}
 		return $ret;
 	}
