@@ -89,7 +89,7 @@ class Connection {
 	}
 	
 	/**
-	 * @return \Utility\Net\SSH\SFTP
+	 * @return \Radical\Utility\Net\SSH\SFTP
 	 */
 	function SFTP(){
 		if(!$this->sftp){

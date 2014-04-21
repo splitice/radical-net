@@ -4,7 +4,7 @@ namespace Radical\Utility\Net\SSH;
 class SFTP {
 	const SCHEME = 'ssh2.sftp://';
 	/**
-	 * @var \Utility\Net\SSH\Connection
+	 * @var \Radical\Utility\Net\SSH\Connection
 	 */
 	private $ssh;
 	
