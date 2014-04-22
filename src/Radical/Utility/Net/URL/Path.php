@@ -55,14 +55,14 @@ class Path {
 	}
 
 	/**
-	 * @return the $fragment
+	 * @return string $fragment
 	 */
 	public function getFragment() {
 		return $this->fragment;
 	}
 
 	/**
-	 * @return the $path
+	 * @return array $path
 	 */
 	public function getPath($asString = false) {
 		if($asString){

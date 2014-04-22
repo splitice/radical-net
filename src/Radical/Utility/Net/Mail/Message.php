@@ -116,7 +116,11 @@ class Message {
 		}
 	}
 
-	function send($body){
+    /**
+     * @param $body
+     * @return bool success status
+     */
+    function send($body){
 		$body = self::body($body);
 		$this->handler->setHeaders($this->headers);
 		return $this->handler->Send($this,$body);
