@@ -24,7 +24,7 @@ class Mysql extends DynamicTableInstance {
 				unset($data[$k]);
 			}
 		}
-		return new \Utility\Net\HTTP\Curl\Response($info, $data['response']);
+		return new \Radical\Utility\Net\HTTP\Curl\Response($info, $data['response']);
 	}
 	
 	static private function getTable(){
