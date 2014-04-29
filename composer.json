@@ -13,7 +13,8 @@
 	"require" : {
 		"php" : ">=5.4",
 		"splitice/radical-common" : "dev-master",
-		"splitice/radical-basic" : "dev-master"
+		"splitice/radical-basic" : "dev-master",
+        "html2text/html2text": "1.0.0"
 	},
 	"minimum-stability" : "dev"
 }

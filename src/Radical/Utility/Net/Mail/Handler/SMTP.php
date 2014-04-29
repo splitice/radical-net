@@ -268,7 +268,9 @@ class SMTP implements IMailHandler {
 	}
 	private function multipartMessage($htmlpart, $boundary) {
 		if ($this->altBody == "") {
-			$this->altBody = strip_tags ( $htmlpart );
+			$this->altBody = strip_tags ( $htmlpart, '<br>' );
+            $this->altBody = str_replace(array("\r\n","\n","\t"),' ', $this->altBody);
+            $this->altBody = preg_replace('/\<br(\s*)?\/?\>/i', "\n", $this->altBody);
 		}
 		$altBoundary = $this->generateBoundary ();
 		ob_start (); // Turn on output buffering
