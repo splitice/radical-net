@@ -4,8 +4,12 @@ namespace Radical\Utility\Net\HTTP;
 class Fetch {	
 	public $curl;
 	private $headers = array();
-	
-	function __construct($url=false,$class='\\Radical\\Utility\\Net\\HTTP\\Curl'){
+
+    /**
+     * @param bool|string $url
+     * @param string $class
+     */
+    function __construct($url=false,$class='\\Radical\\Utility\\Net\\HTTP\\Curl'){
 		$this->curl = new $class($url);
 		
 		global $_CONFIG;
