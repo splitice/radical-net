@@ -19,8 +19,8 @@ class URL {
 		return false;
 	}
 	function __construct($data) {
-		$this->scheme = $data ['scheme'];
-		$this->host = new URL\Host($data ['host']);
+		$this->scheme = empty($data ['scheme'])? null : $data ['scheme'];
+		$this->host = empty($data ['host'])? null : new URL\Host($data ['host']);
 		if(isset($data ['port']))
 			$this->port = (int)$data ['port'];
 		
@@ -68,10 +68,14 @@ class URL {
 	}
 	
 	function toURL() {
-		$url = $this->scheme . '://' . $this->host;
-		if($this->port != 80){
-			$url .= ':'.$this->port;
-		}
+        $url = '';
+        if($this->host !== null || $this->scheme !== null){
+		    $url = $this->scheme . '://' . $this->host;
+
+            if($this->port != 80){
+                $url .= ':'.$this->port;
+            }
+        }
 		$url .='/' . ltrim($this->path->__toString(),'/');
 		return rtrim($url,'/');
 	}
@@ -194,6 +198,15 @@ class URL {
 		}
 		return false;
 	}
+
+    static function fromURLorPath($url){
+        $ret = parse_url ( $url );
+        if (isset ( $ret ['scheme'] )) {
+            $ret ['scheme'] = UTF8::lower ( $ret ['scheme'] );
+            $ret ['host'] = UTF8::lower ( $ret ['host'] );
+        }
+        return new static ( $ret );
+    }
 	
 	static function fromRequest($path = null){
 		$scheme = 'http://';
