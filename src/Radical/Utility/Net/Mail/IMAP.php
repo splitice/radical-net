@@ -5,10 +5,25 @@ class IMAP {
 	private $con;
 	
 	function __construct($hostname, $username, $password){
-		$this->con = imap_open($hostname, $username, $password);
+		$this->open($hostname, $username, $password);
 	}
+
+    function open($hostname, $username, $password){
+        $this->con = imap_open($hostname, $username, $password);
+        if(!$this->con){
+            throw new \Exception("Unable to open connection to: ".$hostname.' error: '.imap_last_error());
+        }
+    }
+
+    function close(){
+        imap_close($this->con);
+        $this->con = null;
+    }
+
 	function __destruct(){
-		imap_close($this->con);
+        if($this->con!=null){
+            $this->close();
+        }
 	}
 	
 	function con(){

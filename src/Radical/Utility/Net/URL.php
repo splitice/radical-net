@@ -186,6 +186,11 @@ class URL {
 	}
 	
 	/* Virtual Construct */
+
+    /**
+     * @param $url
+     * @return bool|URL
+     */
 	static function fromURL($url) {
 		if (! strpos ( $url, '://' ) || ! self::_SCHEME_VALID ( $url )) {
 			$url = 'http://' . $url;
@@ -199,6 +204,10 @@ class URL {
 		return false;
 	}
 
+    /**
+     * @param $url
+     * @return URL
+     */
     static function fromURLorPath($url){
         $ret = parse_url ( $url );
         if (isset ( $ret ['scheme'] )) {
@@ -207,7 +216,11 @@ class URL {
         }
         return new static ( $ret );
     }
-	
+
+    /**
+     * @param null $path
+     * @return bool|URL
+     */
 	static function fromRequest($path = null){
 		$scheme = 'http://';
 		if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']){

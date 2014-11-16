@@ -48,11 +48,15 @@ class Path {
 	}
 
 	/**
-	 * @return the $query
+	 * @return array $query
 	 */
 	public function getQuery() {
 		return $this->query;
 	}
+
+    public function setQueryValue($key, $value){
+        $this->query[$key] = $value;
+    }
 
 	/**
 	 * @return string $fragment
