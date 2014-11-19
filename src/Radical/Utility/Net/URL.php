@@ -226,8 +226,9 @@ class URL {
 		if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']){
 			$scheme = 'https://';
 		}
-		
-		$url = $scheme.$_SERVER["HTTP_HOST"];
+
+        $host = isset($_SERVER["HTTP_HOST"])?$_SERVER["HTTP_HOST"]:$_SERVER['SERVER_ADDR'];
+		$url = $scheme.$host;
 		if(!$path) $path = $_SERVER['REQUEST_URI'];
 		$url.=$path;
 
