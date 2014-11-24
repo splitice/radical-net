@@ -20,12 +20,13 @@ class CIDR {
 	
 	function contains($ip){
 		$ip_mask = $this->mask();
+
+        list ($net, $mask) = split ("/", $this->cidr);
+        $ip_range = ip2long($net);
 		
 		$ip_ip = ip2long ($ip);
 		
-		$ip_ip_net = $ip_ip & $ip_mask;
-		
-		return ($ip_ip_net == $ip_net);
+		return ($ip_ip & $ip_mask) == ($ip_range & $ip_mask);
 	}
 	
 	function network(){
