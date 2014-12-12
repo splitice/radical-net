@@ -89,9 +89,12 @@ class Path {
 	function firstPathElement(){
 		return isset($this->path[0])?$this->path[0]:null;
 	}
+    function removePathElement($n){
+        unset($this->path[$n]);
+        $this->path = array_values($this->path);
+    }
 	function removeFirstPathElement(){
-		unset($this->path[0]);
-		$this->path = array_values($this->path);
+        $this->removePathElement(0);
 	}
 	function queryString(){
 		return $this->query_string;
