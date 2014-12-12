@@ -107,10 +107,10 @@ class SMTP implements IMailHandler {
 		$headers = $m->getHeaders();
 		
 		/* set up the headers and message body with attachments if necessary */
-		$email = "Date: " . date ( "D, j M Y G:i:s" ) . " -0500" . $this->newline;
+		$email = "Date: " . date ( "D, j M Y G:i:s P" ) . $this->newline;
 		$email .= "From: $from" . $this->newline;
-		if(!isset($headers['Reply-To']))
-			$email .= "Reply-To: $from" . $this->newline;
+		if($m->getReplyTo())
+			$email .= "Reply-To: ".$m->getReplyTo() . $this->newline;
 		
 		$email .= $this->setRecipients ( $to );
 		
