@@ -14,14 +14,19 @@ class Curl extends CurlBase {
 			$this->setUrl($url);
 		}
 	}
+
+	function close(){
+		curl_close($this->ch);
+		$this->ch = curl_init();
+	}
 	
-	function cH(){
+	function ch(){
 		$ret = curl_setopt_array($this->ch, $this->data);
 		if(!$ret){
 			throw new \Exception('Could not set all curl options');
 		}
 		if($this->cookieManager){
-			$this->cookieManager->CH($this->ch);
+			$this->cookieManager->ch($this->ch);
 		}else{
 			$this->data[CURLOPT_COOKIEJAR] = null;
 			$this->data[CURLOPT_COOKIEFILE] = null;
@@ -45,5 +50,10 @@ class Curl extends CurlBase {
 	
 	function error(){
 		return curl_error($this->ch);
+	}
+
+	function __clone(){
+		$this->ch = curl_copy_handle($this->ch);
+		$this->cookieManager = clone $this->cookieManager;
 	}
 }

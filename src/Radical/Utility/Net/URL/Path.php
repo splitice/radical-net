@@ -21,7 +21,7 @@ class Path {
 	}
 	
 	/**
-	 * @param field_type $query
+	 * @param array $query
 	 */
 	public function setQuery($query) {
 		if(is_string($query)){

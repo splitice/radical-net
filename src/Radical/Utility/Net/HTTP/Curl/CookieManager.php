@@ -15,7 +15,7 @@ class CookieManager {
 			file_put_contents($this->file, '');
 		}
 	}
-	function cH($ch){
+	function ch($ch){
 		curl_setopt($ch, CURLOPT_COOKIEJAR, $this->file);
 		curl_setopt($ch, CURLOPT_COOKIEFILE, $this->file);
 		return $ch;

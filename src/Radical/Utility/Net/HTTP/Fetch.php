@@ -21,6 +21,11 @@ class Fetch {
 		
 		$this->curl->cookieManager = Curl\CookieManager::Create();
 	}
+
+	function close(){
+		$this->curl->close();
+	}
+
 	function setUrl($url){
 		$this->curl[CURLOPT_URL] = $url;
 		return $this;
@@ -168,9 +173,13 @@ class Fetch {
 		return $ret;
 	}
 	
-	function cH(){
+	function ch(){
 		$ch = $this->curl->CH();
 		return $ch;
+	}
+
+	function __clone(){
+		$this->curl = clone $this->curl;
 	}
 	
 	/*if($this->pre_resolve){
