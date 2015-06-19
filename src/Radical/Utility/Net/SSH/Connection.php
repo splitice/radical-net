@@ -2,6 +2,7 @@
 namespace Radical\Utility\Net\SSH;
 
 use Radical\Utility\Net\SSH\Exceptions\SSHException;
+
 class Connection {
 	//Connection Details
 	private $host;

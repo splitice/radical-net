@@ -2,6 +2,7 @@
 namespace Radical\Utility\Net\HTTP\Curl;
 use Radical\Basic\Structs\UserPass;
 use Radical\Utility\Net\HTTP\Curl;
+
 /**
  * Proxy class used to define proxy for curl connections
  *

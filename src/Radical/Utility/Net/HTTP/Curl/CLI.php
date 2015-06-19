@@ -1,7 +1,6 @@
 <?php
 namespace Radical\Utility\Net\HTTP\Curl;
 
-use Radical\Utility\Net\HTTP\Curl\CurlBase;
 use Radical\Utility\System;
 
 class CLI extends CurlBase {

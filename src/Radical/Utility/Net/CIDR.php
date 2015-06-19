@@ -1,7 +1,6 @@
 <?php
 namespace Radical\Utility\Net;
 
-use X4B\Utility\CIDRRange;
 class CIDR {
 	protected $cidr;
 	

@@ -2,6 +2,7 @@
 namespace Radical\Utility\Net\HTTP\Curl;
 
 use Radical\Database\IToSQL;
+
 class Info implements IToSQL {
 	public $url;
 	public $content_type;
