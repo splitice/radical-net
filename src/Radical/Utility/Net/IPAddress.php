@@ -74,4 +74,12 @@ class IPAddress {
 	function toEscaped(){
 		return \Radical\DB::E($this->ip);
 	}
+
+    function isPrivate(){
+        return preg_match('`(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)`', $this->ip);
+    }
+
+    function isLocal(){
+        return preg_match('`^127\.`', $this->ip);
+    }
 }

@@ -9,7 +9,7 @@ class CIDR {
 	}
 	
 	function mask(){
-		list ($net, $mask) = split ("/", $this->cidr);
+		list ($net, $mask) = explode ("/", $this->cidr);
 		
 		$ip_net = ip2long ($net);
 		$ip_mask = ~((1 << (32 - $mask)) - 1);
@@ -20,7 +20,7 @@ class CIDR {
 	function contains($ip){
 		$ip_mask = $this->mask();
 
-        list ($net, $mask) = split ("/", $this->cidr);
+        list ($net, $mask) = explode("/", $this->cidr);
         $ip_range = ip2long($net);
 		
 		$ip_ip = ip2long ($ip);
@@ -29,7 +29,7 @@ class CIDR {
 	}
 	
 	function network(){
-		list ($net, $mask) = split ("/", $this->cidr);
+		list ($net, $mask) = explode ("/", $this->cidr);
 		
 		$ip_net = ip2long ($net);
 		$ip_mask = ~((1 << (32 - $mask)) - 1);
