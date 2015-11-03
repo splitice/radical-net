@@ -172,7 +172,7 @@ class URL {
 	}
 	
 	/**
-	 * @param field_type $query
+	 * @param string $query
 	 */
 	public function setQuery($query) {
 		$this->path->setQuery($query);

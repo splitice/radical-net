@@ -43,11 +43,15 @@ class CIDR {
 		return preg_match('`^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/(\d|[1-2]\d|3[0-2]))$`m', $this->cidr);
 	}
 	
-	function range(){
+	function range($long = false){
 		list($start,$end) = CIDRRange::cidrToRange($this->cidr);
 		$ret = array();
 		for($i = ip2long($start), $f = ip2long($end); $i <= $f; $i++){
-			$ret[] = long2ip($i);
+			if($long){
+				$ret[] = $i;
+			} else {
+				$ret[] = long2ip($i);
+			}
 		}
 		return $ret;
 	}
