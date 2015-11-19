@@ -44,8 +44,16 @@ class Transfer {
 	function getId(){
 		return $this->id;
 	}
-	
+
+	/**
+	 * @var \Radical\Utility\Net\HTTP\Curl\Response
+	 */
 	private $_data;
+
+	/**
+	 * @return HTTP\Curl\Response
+	 * @throws \Exception
+	 */
 	function getData(){
 		if($this->_data) return $this->_data;
 		
