@@ -16,6 +16,18 @@ class CIDR {
 		
 		return $ip_mask;
 	}
+
+	function address(){
+		list ($net) = explode ("/", $this->cidr);
+
+		return $net;
+	}
+
+	function cidr(){
+		list ($_,$cidr) = explode ("/", $this->cidr);
+
+		return $cidr;
+	}
 	
 	function contains($ip){
 		$ip_mask = $this->mask();
