@@ -199,7 +199,11 @@ class CIDRRange
             $maxsize = self::maxBlock(long2ip($start));
             $maxdiff = 32 - intval(log($end - $start + 1) / log(2));
             $size = ($maxsize > $maxdiff) ? $maxsize : $maxdiff;
-            $listCIDRs[] = long2ip($start) . "/$size";
+            $ip = long2ip($start);
+            if($size != 32){
+                $ip .= "/$size";
+            }
+            $listCIDRs[] = $ip;
             $start += pow(2, (32 - $size));
         }
         return $listCIDRs;
