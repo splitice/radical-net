@@ -11,6 +11,8 @@ class IP {
 			$ip = $ip->getIp();
 		}
 		if(!is_string($ip)){
+			debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+			exit;
 			throw new \Exception('$ip must be a string not '.gettype($ip));
 		}
 		$this->ip = $ip;
@@ -35,6 +37,9 @@ class IP {
 	}
 	
 	function isValid(){
+		if(trim($this->ip) != $this->ip){
+			return false;
+		}
 		return filter_var ( $this->ip, FILTER_VALIDATE_IP );
 	}
 	
@@ -73,5 +78,41 @@ class IP {
 	
 	function toEscaped(){
 		return \Radical\DB::E($this->ip);
+	}
+
+	public static function isipv6long($l){
+		return is_resource($l) && get_resource_type($l) == 'GMP integer';
+	}
+
+	static function ip2long6($ipv6) {
+		$ip_n = inet_pton($ipv6);
+		$ipv6long = '';
+		$bits = 15; // 16 x 8 bit = 128bit
+		while ($bits >= 0) {
+			$bin = sprintf("%08b",(ord($ip_n[$bits])));
+			$ipv6long = $bin.$ipv6long;
+			$bits--;
+		}
+		return gmp_init($ipv6long,2);
+	}
+
+	static function long2ip6($ipv6long) {
+
+		$bin = gmp_strval(gmp_init($ipv6long,10),2);
+		if (strlen($bin) < 128) {
+			$pad = 128 - strlen($bin);
+			for ($i = 1; $i <= $pad; $i++) {
+				$bin = "0".$bin;
+			}
+		}
+		$bits = 0;
+		while ($bits <= 7) {
+			$bin_part = substr($bin,($bits*16),16);
+			$ipv6 .= dechex(bindec($bin_part)).":";
+			$bits++;
+		}
+		// compress
+
+		return inet_ntop(inet_pton(substr($ipv6,0,-1)));
 	}
 }

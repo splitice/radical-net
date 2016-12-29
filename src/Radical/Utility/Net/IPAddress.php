@@ -35,7 +35,7 @@ class IPAddress {
 	}
 	
 	function isValid(){
-		return filter_var ( $this->ip, FILTER_VALIDATE_IP );
+		return filter_var ( $this->ip, FILTER_VALIDATE_IP ) !== false;
 	}
 	
 	function hash(){

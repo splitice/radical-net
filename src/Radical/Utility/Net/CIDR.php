@@ -10,8 +10,7 @@ class CIDR {
 	
 	function mask(){
 		list ($net, $mask) = explode ("/", $this->cidr);
-		
-		$ip_net = ip2long ($net);
+
 		$ip_mask = ~((1 << (32 - $mask)) - 1);
 		
 		return $ip_mask;

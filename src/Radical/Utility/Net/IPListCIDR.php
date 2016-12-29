@@ -19,9 +19,10 @@ class IPListCIDR
 	function ip_to_range($ips)
 	{
 		$ips = array_values($ips);
+		sort($ips);
 		$lastindex = count($ips) - 1;
 		$ret = array();
-		$s = array();
+		$s = null;
 		foreach ($ips as $i => $n) {
 			if ($i == 0)
 				$s = $n;
@@ -35,7 +36,7 @@ class IPListCIDR
 				$s = null;
 			}
 		}
-		if ($s) {
+		if ($s !== null) {
 			$ret[] = $s;
 		}
 
@@ -54,9 +55,12 @@ class IPListCIDR
 		$cidrs = array();
 		foreach ($ip_ranges as $range) {
 			if (!is_array($range)) {
-				$cidrs[] = trim(long2ip($range));
+				$ip = \IP::create($range);
+				$cidrs[] = (string)$ip;
 			} else {
-				foreach (CIDRRange::rangeToCIDRList(long2ip($range[0]), long2ip($range[1])) as $c) {
+				$range[0] = \IP::create($range[0]);
+				$range[1] = \IP::create($range[1]);
+				foreach (CIDRRange::rangeToCIDRList((string)$range[0],(string)$range[1]) as $c) {
 					$cidrs[] = $c;
 				}
 			}
@@ -73,17 +77,17 @@ class IPListCIDR
 	public function cidr2long(&$ips)
 	{
 		foreach ($ips as $k => $v) {
-			if (strpos($v, '/') || $v instanceof CIDR) {
-				$v = ($v instanceof CIDR) ? $v : new CIDR($v);
-				foreach ($v->range(true) as $kk => $i) {
+			if (strpos($v, '/') || $v instanceof \IPBlock) {
+				$v = ($v instanceof \IPBlock) ? $v : \IPBlock::create($v);
+				foreach ($v as $kk => $i) {
 					if ($kk == 0) {
-						$ips[$k] = $i;
+						$ips[$k] = $i->numeric();
 					} else {
-						$ips[] = $i;
+						$ips[] = $i->numeric();
 					}
 				}
 			} else {
-				$ips[$k] = ip2long($v);
+				$ips[$k] = \IP::create($v)->numeric();
 			}
 		}
 	}
