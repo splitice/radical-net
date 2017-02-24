@@ -25,6 +25,7 @@ class Multi {
 	function Add(Fetch $obj, $callback, $id = null) {
 		$transfer = new Internal\Transfer ( $obj, $this, $callback, $id );
 		$this->addTransfer ( $transfer );
+		return $transfer;
 	}
 	
 	function addTransfer(Internal\Transfer $transfer) {
