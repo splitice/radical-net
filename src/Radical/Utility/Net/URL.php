@@ -1,6 +1,6 @@
 <?php
 namespace Radical\Utility\Net;
-use Radical\Basic\String\UTF8;
+use Radical\Basic\StringHelper\UTF8;
 
 class URL {
 	protected $scheme;
