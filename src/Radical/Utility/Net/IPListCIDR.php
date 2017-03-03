@@ -78,7 +78,11 @@ class IPListCIDR
 	{
 		foreach ($ips as $k => $v) {
 			if (strpos($v, '/') || $v instanceof \IPBlock) {
-				$v = ($v instanceof \IPBlock) ? $v : \IPBlock::create($v);
+				try {
+					$v = ($v instanceof \IPBlock) ? $v : \IPBlock::create($v);
+				}catch (\Exception $ex){
+					continue;
+				}
 				foreach ($v as $kk => $i) {
 					if ($kk == 0) {
 						$ips[$k] = $i->numeric();
@@ -87,7 +91,11 @@ class IPListCIDR
 					}
 				}
 			} else {
-				$ips[$k] = \IP::create($v)->numeric();
+				try {
+					$ips[$k] = \IP::create($v)->numeric();
+				}catch (\Exception $ex){
+					continue;
+				}
 			}
 		}
 	}
