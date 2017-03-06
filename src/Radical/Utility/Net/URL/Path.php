@@ -21,11 +21,11 @@ class Path {
 	}
 	
 	/**
-	 * @param array $query
+	 * @param array|string $query
 	 */
 	public function setQuery($query) {
 		if(is_string($query)){
-			parse_str($query);
+			parse_str(ltrim($query,'?'), $query);
 		}
 		$this->query = $query;
 	}
