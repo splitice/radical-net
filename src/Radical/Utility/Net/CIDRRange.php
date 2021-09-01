@@ -190,7 +190,7 @@ class CIDRRange
      * @see http://null.pp.ru/src/php/Netmask.phps
      * @return Array CIDR blocks in a numbered array.
      */
-    public static function rangeToCIDRList($startIPinput, $endIPinput = NULL)
+    public static function rangeToCIDRList($startIPinput, $endIPinput = NULL, $shorten = true)
     {
         $listCIDRs = array();
         $start = ip2long($startIPinput);
@@ -200,7 +200,7 @@ class CIDRRange
             $maxdiff = 32 - intval(log($end - $start + 1) / log(2));
             $size = ($maxsize > $maxdiff) ? $maxsize : $maxdiff;
             $ip = long2ip($start);
-            if($size != 32){
+            if($size != 32 && $shorten){
                 $ip .= "/$size";
             }
             $listCIDRs[] = $ip;

@@ -16,28 +16,40 @@ class IPListCIDR
 	 * @param int[] $ips array of sorted IPv4 addresses as integers
 	 * @return int[]
 	 */
-	function ip_to_range($ips)
+	function ip_to_range($ips, $sorted = false)
 	{
-		$ips = array_values($ips);
-		sort($ips);
-		$lastindex = count($ips) - 1;
-		$ret = array();
-		$s = null;
-		foreach ($ips as $i => $n) {
-			if ($i == 0)
-				$s = $n;
-			else if ($ips [$i - 1] + 1 != $n) {
-				if ($s != null)
-					$ret[] = $s;
+	    if(!$sorted) {
+            $ips = array_values($ips);
+            sort($ips);
+        }
 
-				$s = $n;
-			} else if ($i == $lastindex || $n + 1 != $ips [$i + 1]) {
-				$ret[] = array($s, $n);
-				$s = null;
-			}
-		}
-		if ($s !== null) {
-			$ret[] = $s;
+        if((is_array($ips) || $ips instanceof \Countable) && count($ips) <= 2) {
+            return $ips;
+        }
+
+
+	    $s = null;
+		$ret = array();
+        if(is_array($ips)){
+            $ips = new \ArrayIterator($ips);
+        }
+		while($current = $ips->current()) {
+			$ips->next();
+            $next = $ips->current();
+
+			if ($next !== false && $current + 1 == $next) {
+                if($s === null) $s = $current;
+            }else{
+			    if($s)
+			    {
+			        $ret[] = array($s, $current);
+			        $s = null;
+                }
+                else
+                {
+                    $ret[] = $current;
+                }
+            }
 		}
 
 		return $ret;
@@ -49,9 +61,10 @@ class IPListCIDR
 	 * @param int[] $ips IPv4 addresses in long form
 	 * @return string[] an array of CIDR's and IP addresses that would contain all the supplied IPs
 	 */
-	public function to_cidr_list($ips)
+	public function to_cidr_list($ips, $short_syntax = true, $sorted = false)
 	{
-		$ip_ranges = $this->ip_to_range($ips);
+		$ip_ranges = $this->ip_to_range($ips, $sorted);
+
 		$cidrs = array();
 		foreach ($ip_ranges as $range) {
 			if (!is_array($range)) {
@@ -60,7 +73,7 @@ class IPListCIDR
 			} else {
 				$range[0] = \IP::create($range[0]);
 				$range[1] = \IP::create($range[1]);
-				foreach (CIDRRange::rangeToCIDRList((string)$range[0],(string)$range[1]) as $c) {
+				foreach (CIDRRange::rangeToCIDRList((string)$range[0],(string)$range[1], $short_syntax) as $c) {
 					$cidrs[] = $c;
 				}
 			}
@@ -100,6 +113,76 @@ class IPListCIDR
 		}
 	}
 
+    /**
+     * Convert a list of CIDRs into a list of IPv4 addresses (number format)
+     *
+     * @param $ips
+     */
+    public function cidr2longGenerator($ips, $sorted = false)
+    {
+        foreach ($ips as $k => $v) {
+            if (strpos($v, '/') || $v instanceof \IPBlock) {
+                try {
+                    $v = ($v instanceof \IPBlock) ? $v : \IPBlock::create($v);
+                }catch (\Exception $ex){
+                    continue;
+                }
+                if($sorted) {
+                    foreach ($v as $kk => $i) {
+                        if ($kk == 0) {
+                            yield $i->numeric();
+                        } else {
+                            yield $i->numeric();
+                        }
+                    }
+                }else{
+                    $ips[$k] = $v;
+                }
+            } else {
+                try {
+                    $v = \IP::create($v);
+                }catch (\Exception $ex){
+                    continue;
+                }
+                if(!$sorted){
+                    $ips[$k] = $v;
+                }else{
+                    yield $v->numeric();
+                }
+            }
+        }
+        if(!$sorted){
+            $numeric = function($v){
+                if($v instanceof \IPBlock){
+                    return $v->getNetworkAddress()->numeric();
+                }
+                return $v->numeric();
+            };
+            usort($ips, function($a, $b) use($numeric){
+                $a = $numeric($a);
+                $b = $numeric($b);
+
+                if($a < $b) return -1;
+                if($b > $a) return 1;
+                return 0;
+            });
+
+            foreach($ips as $v){
+                if($v instanceof \IP){
+                    yield $v->numeric();
+                }else{
+                    foreach ($v as $kk => $i) {
+                        if ($kk == 0) {
+                            yield $i->numeric();
+                        } else {
+                            yield $i->numeric();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 	/**
 	 * Lossy conversion to subnets of a specific $cidr as long as $number_req is met
 	 *
@@ -111,33 +194,28 @@ class IPListCIDR
 	public function subnet_reduce(&$ips, $cidr, $number_req)
 	{
 		$cidr24s = array();
-		$cidrs = array();
 		$ipmask = -1 << (32 - (int)$cidr);
 
 		foreach ($ips as $k => $v) {
 			$mask = $v & $ipmask;
-			if (!isset($cidr24s[$mask])) {
-				$cidr24s[$mask] = 0;
-			}
+			if (!isset($cidr24s[$mask])) $cidr24s[$mask] = 0;
 			$m = ++$cidr24s[$mask];
-			if ($m >= $number_req) {
-				unset($ips[$k]);
-			}
+			if ($m >= $number_req) unset($ips[$k]);
 		}
+
+		foreach($cidr24s as $k=>$v){
+            if ($cidr24s[$k] < $number_req) unset($cidr24s[$k]);
+        }
 
 		foreach ($ips as $k => $v) {
-			$mask = $v & $ipmask;
-			if ($cidr24s[$mask] >= $number_req) {
-				unset($ips[$k]);
-			}
+			if (isset($cidr24s[$v & $ipmask])) unset($ips[$k]);
 		}
 
+		$append = '/' . $cidr;
 		foreach ($cidr24s as $mk => $mv) {
-			if ($mv >= $number_req) {
-				$cidrs[] = long2ip($mk) . '/' . $cidr;
-			}
+            $cidr24s[$mk] = long2ip($mk) . $append;
 		}
 
-		return $cidrs;
+		return array_values($cidr24s);
 	}
 }

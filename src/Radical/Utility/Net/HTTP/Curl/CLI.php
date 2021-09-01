@@ -42,11 +42,7 @@ class CLI extends CurlBase {
 					if($v){
 						if(isset($this->data[CURLOPT_POSTFIELDS])){
 							foreach($this->data[CURLOPT_POSTFIELDS] as $field=>$value){
-								/*if(is_string($value) && $value{0}=='@'){
-									
-								}else{*/
-									$cmd .= '--F '.escapeshellarg(urlencode($field).'='.urlencode($value)).' ';
-								//}
+                                $cmd .= '--F '.escapeshellarg(urlencode($field).'='.urlencode($value)).' ';
 							}
 						}
 					}

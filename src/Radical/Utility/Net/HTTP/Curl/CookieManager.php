@@ -17,8 +17,8 @@ class CookieManager {
 	}
 	function ch($ch){
 		curl_setopt($ch, CURLOPT_COOKIEJAR, $this->file);
-		curl_setopt($ch, CURLOPT_COOKIEFILE, $this->file);
-		return $ch;
+        curl_setopt($ch, CURLOPT_COOKIEFILE, $this->file);
+        return $ch;
 	}
 	
 	function __destruct(){
